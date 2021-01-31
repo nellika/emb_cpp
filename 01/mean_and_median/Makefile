@@ -6,11 +6,7 @@
 ##
 ## \brief     This file belongs to the C++ tutorial project
 ##
-## \author    Bernard
-##
-## \copyright Copyright ng2goodies 2015
-##            Distributed under the MIT License
-##            See http://opensource.org/licenses/MIT
+## \author    Nelli Nyisztor
 ##
 ##################################################################################
 ## header-end
@@ -27,9 +23,9 @@ CFLAGS_DEBUG       := $(CFLAGS_COMMON) -O -g
 CFLAGS             := $(CFLAGS_COMMON) -O3
 
 
-TARGET             := histogram
+TARGET             := mean_and_median
 SRC_FILES          := \
-  ./histogram.cpp
+  ./mean_and_median.cpp
 
 
 OBJECT_FILES       := $(addprefix  $(OBJDIR)/,$(notdir $(SRC_FILES:.cpp=.r.o)))

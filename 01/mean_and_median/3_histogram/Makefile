@@ -6,11 +6,7 @@
 ##
 ## \brief     This file belongs to the C++ tutorial project
 ##
-## \author    Bernard
-##
-## \copyright Copyright ng2goodies 2015
-##            Distributed under the MIT License
-##            See http://opensource.org/licenses/MIT
+## \author    Nelli Nyisztor
 ##
 ##################################################################################
 ## header-end
