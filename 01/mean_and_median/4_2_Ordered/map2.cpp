@@ -26,14 +26,17 @@ int main(int argc, char *argv[]) {
   std::ifstream fin(file_name, std::ios::in);
 
   string line;
+  string hash_key;
+  double hash_val;
+  std::size_t end_of_hash, start_of_value;
 
   while (std::getline(fin, line)) {
     // split line into hash key and value
-    std::size_t end_of_hash = line.find_first_of(" ");
-    std::size_t start_of_value = line.find_last_of(" ") + 1;
+    end_of_hash = line.find_first_of(" ");
+    start_of_value = line.find_last_of(" ") + 1;
 
-    string hash_key = line.substr(0, end_of_hash);
-    double hash_val = std::stod(line.substr(start_of_value));
+    hash_key = line.substr(0, end_of_hash);
+    hash_val = std::stod(line.substr(start_of_value));
 
     hash_map[hash_key] = hash_val;
     hash_map_rev.insert(std::pair<double, std::string>(hash_val, hash_key));
