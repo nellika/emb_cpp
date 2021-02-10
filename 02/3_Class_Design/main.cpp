@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
             }
         } else if(func_name.compare("spline") == 0) {
             ELEC4::Spline interpolate(xs, ys);
-            std::cout << interpolate.get_matrix() << std::endl;
+            // std::cout << interpolate.get_matrix() << std::endl;
             for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
                 std::cout << "Value for " << x << " is ";
                 std::cout << interpolate.get_value(x) << std::endl;

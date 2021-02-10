@@ -3,8 +3,9 @@
 
 #include <cmath>
 #include <vector>
-#include <map>
+#include <utility>
 #include <Eigen/Dense>
+#include "gnuplot-iostream.h"
 
 namespace ELEC4 {
 
@@ -34,6 +35,22 @@ class LinearInterpolation {
         _ys.push_back(_ys[0]);
 
         calculateSlope();
+    }
+
+    void plot_graph() const {
+        Gnuplot gp;
+        std::vector<std::pair<double, double> > xy_pts;
+        for (double x = 0.0; x <1.0; x += 0.01) {
+            double y = get_value(x);
+            xy_pts.push_back(std::make_pair(x, y));
+        }
+
+        gp << "set xrange [0:1]" << std::endl
+           << "set yrange [-50:300]" << std::endl
+           << "set title \"PW Linear interpolation\"" << std::endl
+           << "set term wxt title \"Plot for Linear interpolation\"" << std::endl;
+        gp << "plot" << gp.file1d(xy_pts)
+            << "with lines title 'linear'" << std::endl;
     }
 
     double get_value(double x) const {
@@ -123,6 +140,23 @@ class Spline {
         solveLPwithConditions();
         // get coefficients
         buildCoeffVectors();
+    }
+
+    void plot_graph() const {
+        Gnuplot gp;
+        std::vector<std::pair<double, double> > xy_pts;
+        for (double x = 0.0; x <1.0; x += 0.01) {
+            double y = get_value(x);
+            xy_pts.push_back(std::make_pair(x, y));
+        }
+
+        gp << "set xrange [0:1]" << std::endl
+           << "set yrange [-50:300]" << std::endl
+           << "set title \"Spline interpolation\"" << std::endl;
+           << "set term wxt title \"Plot for Cubic Spline interpolation\""
+           << std::endl;
+        gp << "plot" << gp.file1d(xy_pts)
+            << "with lines title 'cubic spline'"<< std::endl;
     }
 
     double get_value(double x) const {

@@ -17,7 +17,7 @@ CC                 := g++
 OBJDIR             := ./build
 
 CFLAGS_COMMON      := -Wall -Wshadow -Wextra -Wno-unused-parameter -Werror
-CFLAGS_COMMON      += -std=c++14
+CFLAGS_COMMON      += -std=c++17
 
 CFLAGS_DEBUG       := $(CFLAGS_COMMON) -O -g -I /usr/local/include/eigen/
 CFLAGS             := $(CFLAGS_COMMON) -O3 -I /usr/local/include/eigen/
@@ -32,9 +32,6 @@ OBJECT_FILES       := $(addprefix  $(OBJDIR)/,$(notdir $(SRC_FILES:.cpp=.r.o)))
 OBJECT_FILES_DEBUG := $(addprefix  $(OBJDIR)/,$(notdir $(SRC_FILES:.cpp=.d.o)))
 DEP_FILES          := $(addprefix  $(OBJDIR)/,$(notdir $(SRC_FILES:.cpp=.r.P)))
 DEP_FILES_DEBUG    := $(addprefix  $(OBJDIR)/,$(notdir $(SRC_FILES:.cpp=.d.P)))
-
-
-all: $(TARGET) c-version
 
 
 $(TARGET): $(OBJECT_FILES) Makefile
