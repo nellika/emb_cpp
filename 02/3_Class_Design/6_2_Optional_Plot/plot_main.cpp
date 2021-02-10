@@ -18,42 +18,42 @@ int main(int argc, char *argv[]) {
     vector<double> xs{ 0., 0.16, 0.42, 0.6425, 0.8575};
     vector<double> ys{100., 183., 235., 40., 15.};
 
-    ELEC4::Spline interpolate(xs, ys);
-    interpolate.plot_graph();
+    if (argc > 1) {
+        string func_name{argv[1]};
 
-    ELEC4::LinearInterpolation interpolate2(xs, ys);
-    interpolate2.plot_graph();
+        if (func_name.compare("linear") == 0) {
+            ELEC4::LinearInterpolation interpolate(xs, ys);
+            for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
+                std::cout << "Value for "
+                          << std::fixed << std::setprecision(1) << x << " is "
+                          << std::setw(8) << std::right << std::fixed
+                          << std::setprecision(3)
+                          << interpolate.get_value(x) << std::endl;
+            }
+        } else if (func_name.compare("spline") == 0) {
+            ELEC4::Spline interpolate(xs, ys);
+            // std::cout << interpolate.get_matrix() << std::endl;
+            for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
+                std::cout << "Value for "
+                          << std::fixed << std::setprecision(1) << x << " is "
+                          << std::setw(8) << std::right << std::fixed
+                          << std::setprecision(3)
+                          << interpolate.get_value(x)<< std::endl;
+            }
+        } else if (func_name.compare("plot") == 0) {
+            ELEC4::LinearInterpolation interpolate_lin(xs, ys);
+            interpolate_lin.plot_graph();
 
-    // if (argc > 1) {
-    //     string func_name{argv[1]};
-
-    //     if (func_name.compare("linear") == 0) {
-    //         ELEC4::LinearInterpolation interpolate(xs, ys);
-    //         for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
-    //             std::cout << "Value for " << x << " is ";
-    //             std::cout << interpolate.get_value(x) << std::endl;
-    //         }
-    //     } else if(func_name.compare("spline") == 0) {
-    //         ELEC4::Spline interpolate(xs, ys);
-    //         // std::cout << interpolate.get_matrix() << std::endl;
-    //         for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
-    //             std::cout << "Value for " << x << " is ";
-    //             std::cout << interpolate.get_value(x) << std::endl;
-    //         }
-    //     } else {
-    //         ELEC4::Spline interpolate(xs, ys);
-    //         std::cout << "Not a valid function, fallback: spline" << std::endl;
-    //         for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
-    //             std::cout << "Value for " << x << " is ";
-    //             std::cout << interpolate.get_value(x) << std::endl;
-    //         }
-    //     }
-    // } else {
-    //     ELEC4::Spline interpolate(xs, ys);
-    //     std::cout << "Not a valid function, fallback: spline" << std::endl;
-    //     for (double x = 0.0 ; x <= 1.0 ; x += 0.1) {
-    //         std::cout << "Value for " << x << " is ";
-    //         std::cout << interpolate.get_value(x) << std::endl;
-    //     }
-    // }
+            ELEC4::Spline interpolate_cub(xs, ys);
+            interpolate_cub.plot_graph();
+        } else {
+            std::cout << "Please use \"linear\", \"spline\" or"
+                      << "\"plot\" as first argument"
+                      << std::endl;
+        }
+    } else {
+        std::cout << "Please use \"linear\", \"spline\" or"
+                      << "\"plot\" as first argument"
+                      << std::endl;
+    }
 }

@@ -152,7 +152,7 @@ class Spline {
 
         gp << "set xrange [0:1]" << std::endl
            << "set yrange [-50:300]" << std::endl
-           << "set title \"Spline interpolation\"" << std::endl;
+           << "set title \"Spline interpolation\"" << std::endl
            << "set term wxt title \"Plot for Cubic Spline interpolation\""
            << std::endl;
         gp << "plot" << gp.file1d(xy_pts)

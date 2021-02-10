@@ -44,6 +44,13 @@ class LinearInterpolation {
 
         return _ys[idx] + _as[idx]*(x - _xs[idx]);
     }
+
+    double get_value_fast(double x) const {
+        auto upper = std::upper_bound(_xs.begin(), _xs.end(), x);
+        size_t idx = std::distance(_xs.begin(), upper) - 1;
+
+        return _ys[idx] + _as[idx]*(x - _xs[idx]);
+    }
 };
 
 class Spline {
@@ -129,7 +136,7 @@ class Spline {
         size_t idx = 0;
 
         while (x > _xs[idx+1] && idx < _size-1) idx++;
-
+        // std::cout << "slow: " << idx << std::endl;
         double delta = x - _xs[idx];
 
         // R_i(x) = a_i (x − x_i )^3 + b_i (x − x_i )^2 + c_i (x − x_i) + d_i
@@ -139,6 +146,17 @@ class Spline {
         //        _ys[idx];
 
         // Optional - math optimization
+        // d(c + d * (b + d * a)) > ad^3 + bd^2 + cd
+        return _ys[idx] +
+                delta * (_cs[idx] + delta * (_bs[idx] + (delta * _as[idx])));
+    }
+
+    double get_value_fast(double x) const {
+        auto upper = std::upper_bound(_xs.begin(), _xs.end(), x);
+        size_t idx = std::distance(_xs.begin(), upper) - 1;
+
+        double delta = x - _xs[idx];
+
         // d(c + d * (b + d * a)) > ad^3 + bd^2 + cd
         return _ys[idx] +
                 delta * (_cs[idx] + delta * (_bs[idx] + (delta * _as[idx])));

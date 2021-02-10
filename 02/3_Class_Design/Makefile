@@ -23,7 +23,7 @@ CFLAGS_DEBUG       := $(CFLAGS_COMMON) -O -g -I /usr/local/include/eigen/
 CFLAGS             := $(CFLAGS_COMMON) -O3 -I /usr/local/include/eigen/
 
 
-TARGET             := test-spline
+TARGET             := interpolate
 SRC_FILES          := \
   ./main.cpp
 
