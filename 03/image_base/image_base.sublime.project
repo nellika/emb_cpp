@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "folder_exclude_patterns": [ ".git",  ".svn", "junk", "build", "msvc"],
+      "file_exclude_patterns": ["*.o", "foo*", "bar*", "*.log", "*.tmp", "*.exe", "*.s", "*.debug"]
+    }
+  ],
+  "settings": {
+    "default_line_ending" : "unix"
+  }
+}
