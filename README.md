@@ -10,8 +10,8 @@
 - [x] Optimize search with STL functions 
 - [x] Generate a set of random numbers with a predefined distribution
 
-## 02 Interpolation
-> Getting familiar external libraries, design a class in our own namespace
+## 02 Class design
+> Getting familiar with external libraries, design a class in our own namespace
 
 - [x] Understand the math background behind PW linear and cubic spline interpolation algos
 - [x] Install and use external library Eigen
