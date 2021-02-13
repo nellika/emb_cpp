@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[10];
-    char stringdata0[63];
+    const uint offsetsAndSize[26];
+    char stringdata0[135];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -33,11 +33,21 @@ QT_MOC_LITERAL(0, 10), // "MainWindow"
 QT_MOC_LITERAL(11, 9), // "slot_exit"
 QT_MOC_LITERAL(21, 0), // ""
 QT_MOC_LITERAL(22, 10), // "slot_about"
-QT_MOC_LITERAL(33, 29) // "slot_load_checker_board_image"
+QT_MOC_LITERAL(33, 24), // "slot_load_triangle_image"
+QT_MOC_LITERAL(58, 29), // "slot_load_checker_board_image"
+QT_MOC_LITERAL(88, 10), // "calcLambda"
+QT_MOC_LITERAL(99, 1), // "x"
+QT_MOC_LITERAL(101, 1), // "y"
+QT_MOC_LITERAL(103, 4), // "type"
+QT_MOC_LITERAL(108, 11), // "pixelToReal"
+QT_MOC_LITERAL(120, 2), // "px"
+QT_MOC_LITERAL(123, 11) // "realToPixel"
 
     },
     "MainWindow\0slot_exit\0\0slot_about\0"
-    "slot_load_checker_board_image"
+    "slot_load_triangle_image\0"
+    "slot_load_checker_board_image\0calcLambda\0"
+    "x\0y\0type\0pixelToReal\0px\0realToPixel"
 };
 #undef QT_MOC_LITERAL
 
@@ -47,7 +57,7 @@ static const uint qt_meta_data_MainWindow[] = {
        9,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -55,14 +65,22 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   32,    2, 0x08,    0 /* Private */,
-       3,    0,   33,    2, 0x08,    1 /* Private */,
-       4,    0,   34,    2, 0x08,    2 /* Private */,
+       1,    0,   56,    2, 0x08,    0 /* Private */,
+       3,    0,   57,    2, 0x08,    1 /* Private */,
+       4,    0,   58,    2, 0x08,    2 /* Private */,
+       5,    0,   59,    2, 0x08,    3 /* Private */,
+       6,    3,   60,    2, 0x08,    4 /* Private */,
+      10,    2,   67,    2, 0x08,    8 /* Private */,
+      12,    2,   72,    2, 0x08,   11 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Double, QMetaType::Double, QMetaType::Double, QMetaType::Int,    7,    8,    9,
+    QMetaType::Double, QMetaType::Int, QMetaType::Bool,   11,    9,
+    QMetaType::Int, QMetaType::Double, QMetaType::Bool,   11,    9,
 
        0        // eod
 };
@@ -75,11 +93,17 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->slot_exit(); break;
         case 1: _t->slot_about(); break;
-        case 2: _t->slot_load_checker_board_image(); break;
+        case 2: _t->slot_load_triangle_image(); break;
+        case 3: _t->slot_load_checker_board_image(); break;
+        case 4: { double _r = _t->calcLambda((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])));
+            if (_a[0]) *reinterpret_cast< double*>(_a[0]) = std::move(_r); }  break;
+        case 5: { double _r = _t->pixelToReal((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< double*>(_a[0]) = std::move(_r); }  break;
+        case 6: { int _r = _t->realToPixel((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject MainWindow::staticMetaObject = { {
@@ -90,7 +114,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
 
 
 >,
@@ -117,13 +141,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 7;
     }
     return _id;
 }

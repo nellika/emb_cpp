@@ -95,7 +95,7 @@ class Spline {
 
         calcNoDerivAndColVector(_size-1, band, delta);
 
-        // null tangents
+        // null tangents + out of boundary cond.
         _M(band + 1,  2) = 1.0;
 
         _M(band + 2,  band + 0) = 3 * delta * delta;
