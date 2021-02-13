@@ -19,3 +19,10 @@
 - [x] Structure code into separate namespace, header file
 - [x] using gnuplot to visualize data points
 
+## 03 Qt basics
+> Discover Qt and the Creator IDE
+
+- [x] Understand what is a Barycentric coordinate system and its relation to the Cartesian coordinates
+- [x] Discover some interesting drawing related QT methods
+- [x] Understand how buttons > actions > functions are connected
+- [x] draw pretty, colorful triangle instead of a dull chess board in 'pixel space'
