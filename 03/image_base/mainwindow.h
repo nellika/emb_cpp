@@ -9,6 +9,7 @@
 QT_BEGIN_NAMESPACE
 class QAction;
 class QLabel;
+class QSlider;
 class QMenu;
 QT_END_NAMESPACE
 
@@ -27,14 +28,17 @@ private slots:
   void slot_about();
   void slot_load_triangle_image();
   void slot_load_checker_board_image();
-  double calcLambda(double x, double y, int type);
-  double pixelToReal(int px, bool type);
-  int realToPixel(double px, bool type);
 
 private:
   void create_menus();
   void create_actions();
 
+  double calcLambda(double x, double y, int type);
+  double pixelToReal(int px, bool type);
+  int realToPixel(double px, bool type);
+
+  QSlider *slider;
+  QLabel *label;
   QAction *action_checker_board_image_;
   QAction *action_triangle_image_;
   QAction *action_about_;

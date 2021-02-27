@@ -72,7 +72,7 @@ void MainWindow::create_menus() {
 
 //
 // Checker Board Triangle
-//
+///
 const int checker_board_width = 600;
 const int checker_board_height = 600;
 const int triangle_width = 600;
@@ -87,16 +87,16 @@ const double t_y3 = 0.06;
 
 double MainWindow::pixelToReal(int px, bool type){
     double real = 0.0;
-    if(type){ real = (double)px/600.0; }
-    else{ real = 1.0-(double)px/600.0;}
+    if(type){ real = (double)px/triangle_width; }
+    else{ real = 1.0-(double)px/triangle_height;}
 
     return real;
 }
 
 int MainWindow::realToPixel(double px, bool type){
     int pixel = 0;
-    if(type){ pixel = px*600; }
-    else{ pixel = (1.0-px)*600;}
+    if(type){ pixel = px*triangle_width; }
+    else{ pixel = (1.0-px)*triangle_height;}
 
     return pixel;
 }
@@ -132,13 +132,16 @@ void MainWindow::slot_load_triangle_image() {
     pen.setStyle(Qt::DashLine);
     painter.setPen(pen);
 
+    int stepX = triangle_width*0.1;
+    int stepY = triangle_height*0.1;
+
     // draw grid
-    for (int x = 60; x < triangle_width; x+=60) {
+    for (int x = stepX; x < triangle_width; x+=stepX) {
         QLineF line(x, 0.0,x,triangle_height);
         painter.drawLine(line);
     }
 
-    for (int y = 60; y < triangle_height; y+=60) {
+    for (int y = stepY; y < triangle_height; y+=stepY) {
         QLineF line(0.0, y,triangle_width,y);
         painter.drawLine(line);
     }
