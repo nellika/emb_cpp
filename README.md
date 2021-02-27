@@ -26,3 +26,17 @@
 - [x] Discover some interesting drawing related QT methods
 - [x] Understand how buttons > actions > functions are connected
 - [x] draw pretty, colorful triangle instead of a dull chess board in 'pixel space'
+
+![Colorful triangle](/03/triangle.png?raw=true "Lab 03 - Triangle")
+
+
+## 04 QT - Derived Class
+> Derive our own img class based on QImage
+
+- [x] Write code for a derived class
+- [x] Reusing code from Lab2 and Lab3
+- [x] Use methods of the base class
+- [x] Discover function objects
+- [x] Draw pretty spline lines and color background based on f(x)
+
+![Colorful splines](/04/derived_spline.png?raw=true "Lab 04 - Derived spline")
