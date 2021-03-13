@@ -3,19 +3,19 @@
 
 #include <QImage>
 #include <complex>
+#include "elec4_util.h"
 
 class MandelbrotImage : public QImage
 {
 private:
     double _d;
-    double _y_c;
-    double _x_c;
-    int _px_min = 0;
+    double _yc;
+    double _xc;
     int _px_maxw;
     int _px_maxh;
     int realToPixel(double px, bool type);
-    double v_pixel2rect(int px);
-    double h_pixel2rect(int px);
+//    double v_pixel2rect(int px);
+//    double h_pixel2rect(int px);
 //    int calcMandelbrot(double Re, double Im, int depth);
     int calcMandelbrot(std::complex<double> c, int depth);
 public:

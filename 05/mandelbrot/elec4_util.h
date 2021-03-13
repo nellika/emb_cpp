@@ -20,24 +20,22 @@ public:
     }
 };
 
-//return -2.0 + 3.0 * (double(x)/width());
-//}
 
-//double MandelbrotImage::v_pixel2rect(int y){
-//return -1.0 + 2.0 * (double(y)/height());
+class Pixel2Rect {
+private:
+    double _mid_coord;
+    double _max_val;
+    double _d;
+    double _mux_1;
+    double _mux_2;
 
-//class Pixel2Rect {
-//private:
-//    int _denom;
-//    int _d;
-
-//    tpl_t _height;
-//public:
-//    Clamp(tpl_t min, tpl_t max) : _min{min}, _max{max}{};
-//    int operator()(int value) {
-//        return (value < _min) ? 0 : ((value > _max) ? _max : value);
-//    }
-//};
+public:
+    Pixel2Rect(double mid_coord_val, double max_val, double d, double mux_1, double mux_2) :
+        _mid_coord{mid_coord_val}, _max_val{max_val}, _d{d}, _mux_1{mux_1}, _mux_2{mux_2}{};
+    double operator()(int value) {
+        return _mid_coord-_mux_1*_d+(double(value)*_mux_2/_max_val);
+    }
+};
 
 class LinearInterpolation {
  private:
