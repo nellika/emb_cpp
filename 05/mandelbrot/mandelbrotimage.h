@@ -2,6 +2,7 @@
 #define MANDELBROTIMAGE_H
 
 #include <QImage>
+#include <complex>
 
 class MandelbrotImage : public QImage
 {
@@ -15,7 +16,8 @@ private:
     int realToPixel(double px, bool type);
     double v_pixel2rect(int px);
     double h_pixel2rect(int px);
-    int calcMandelbrot(double Re, double Im, int max_iter);
+//    int calcMandelbrot(double Re, double Im, int depth);
+    int calcMandelbrot(std::complex<double> c, int depth);
 public:
     MandelbrotImage(int spline_width, int spline_height, double d, double x_c, double y_c);
     ~MandelbrotImage() = default;
