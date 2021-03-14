@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <vector>
 
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QLabel;
@@ -38,6 +39,7 @@ private:
   double calcLambda(double x, double y, int type);
   double pixelToReal(int px, bool type);
   int realToPixel(double px, bool type);
+  bool _mandelKeyPressActive = false;
 
   QSlider *slider;
   QLabel *label;
@@ -50,6 +52,9 @@ private:
 
   QMenu *menu_open_;
   QMenu *menu_help_;
+
+protected:
+  void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif  // MAINWINDOW_H

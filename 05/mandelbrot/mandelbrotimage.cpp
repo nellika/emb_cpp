@@ -41,8 +41,33 @@ void MandelbrotImage::createColorVectors(){
 
 }
 
-void MandelbrotImage::process_sub_image(int current_thread,int max_thread){
-    printf("%d",max_thread - current_thread);
+void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
+    ELEC4::Pixel2Rect v_pixel2rect(_yc, _px_maxh, _d, 1, 2);
+    ELEC4::Pixel2Rect h_pixel2rect(_xc, _px_maxw, _d, 1.5, 3);
+
+    int n;
+    int depth = 100;
+
+//    for (int y = 0; y < height(); ++y) {
+      for (auto y : current_rows) {
+        double im_0 = v_pixel2rect(y);
+        for (int x = 0; x < width(); ++x) {
+            double re_0 = h_pixel2rect(x);
+
+            std::complex<double> c_0(re_0,im_0);
+
+            n = calcMandelbrot(c_0, depth);
+
+            if(n == depth){
+                setPixel(x, y, qRgb(0, 0, 0));
+            } else {
+//                double v=log(log(std::abs(_zn_256)*std::abs(_zn_256))/log(2))/log(2);
+//                int i=1024*sqrt(_n_256+5-v);
+//                printf("%d \n",i);
+                setPixel(x,y,qRgb(_r_spline[x], _g_spline[x], _b_spline[x]));
+            }
+        }
+    }
 }
 
 int MandelbrotImage::calcMandelbrot(std::complex<double> c_0, int depth){
@@ -62,44 +87,39 @@ int MandelbrotImage::calcMandelbrot(std::complex<double> c_0, int depth){
 
 MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, double yc) : QImage(width, height, QImage::Format_RGB32)
 {
-    std::thread threads[num_threads];
+    std::vector<std::thread> threads;
     _px_maxh = height-1;
     _px_maxw = width-1;
     _d = d;
     _xc = xc;
     _yc = yc;
 
-    int n;
-    int depth = 100;
 
-    QPainter painter(this);
-    painter.fillRect(rect(), Qt::black);
+    int N = 0;
+    size_t n_rows = height / num_threads;
+    std::vector< std::vector<int>> buckets( num_threads );
+    for (int y = 0; y < height; ++y) {
+        buckets[N].push_back(y);
+        if ( (buckets[N].size() == n_rows) && (N < (num_threads - 1)) ) {
+            N++;
+        }
+    }
 
     createColorVectors();
 
-    ELEC4::Pixel2Rect v_pixel2rect(_yc, _px_maxh, _d, 1, 2);
-    ELEC4::Pixel2Rect h_pixel2rect(_xc, _px_maxw, _d, 1.5, 3);
-
     auto start = std::chrono::steady_clock::now();
-    for (int y = 0; y < height; ++y) {
-        double im_0 = v_pixel2rect(y);
-        for (int x = 0; x < width; ++x) {
-            double re_0 = h_pixel2rect(x);
 
-            std::complex<double> c_0(re_0,im_0);
+    for( int i = 0; i < num_threads; ++i ) {
 
-            n = calcMandelbrot(c_0, depth);
-
-            if(n == depth){
-                setPixel(x, y, qRgb(0, 0, 0));
-            } else {
-//                double v=log(log(std::abs(_zn_256)*std::abs(_zn_256))/log(2))/log(2);
-//                int i=1024*sqrt(_n_256+5-v);
-//                printf("%d \n",i);
-                setPixel(x,y,qRgb(_r_spline[x], _g_spline[x], _b_spline[x]));
-            }
-        }
+        threads.emplace_back([=]() {
+            process_sub_image(buckets[i]);
+        });
     }
+
+    for (auto &thread_elem : threads) {
+        thread_elem.join();
+    }
+
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
     printf("INFO: image calculed in %2fs\n", elapsed_seconds.count()*1000000);
@@ -108,3 +128,28 @@ MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, dou
 //    std::cout << "Info: image calculated in " << ELEC4::Commify(elapsed_seconds.count()*1000000) << "us";
 
 }
+
+//void MandelbrotImage::keyPressEvent(QKeyEvent *event){
+//        switch (event->key()) {
+//            case Qt::Key_Left:
+//                std::cout << "Left" << std::endl;
+//                break;
+//            case Qt::Key_Right:
+//                std::cout << "Right" << std::endl;
+//                break;
+//            case Qt::Key_Down:
+//                std::cout << "Down" << std::endl;
+//                break;
+//            case Qt::Key_Up:
+//                std::cout << "Up" << std::endl;
+//                break;
+//            case Qt::Key_Plus:
+//                std::cout << "Zoom in" << std::endl;
+//                break;
+//            case Qt::Key_Minus:
+//                std::cout << "Zoom out" << std::endl;
+//                break;
+//            default:
+//                std::cout << "This key does not do anything :(" << std::endl;
+//        }
+//}

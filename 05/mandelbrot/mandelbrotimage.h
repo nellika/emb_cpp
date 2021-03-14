@@ -8,6 +8,7 @@
 #include <thread>
 #include "elec4_util.h"
 
+
 class MandelbrotImage : public QImage
 {
 private:
@@ -35,12 +36,14 @@ private:
 
 
     static const int num_threads = 8;
-    void process_sub_image(int current_thread,int max_thread);
+    void process_sub_image(std::vector<int> current_rows);
     void createColorVectors();
 
 public:
     MandelbrotImage(int spline_width, int spline_height, double d, double x_c, double y_c);
     ~MandelbrotImage() = default;
+//protected:
+//    void keyPressEvent(QKeyEvent *e);
 };
 
 #endif // MANDELBROTIMAGE_H

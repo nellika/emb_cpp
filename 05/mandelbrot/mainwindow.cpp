@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <QtWidgets>
+#include <QKeyEvent>
 #include "splineimage.h"
 #include "mandelbrotimage.h"
 
@@ -25,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   resize(QGuiApplication::primaryScreen()->availableSize() * 2 / 5);
 
 }
-
 
 void MainWindow::create_actions() {
   //
@@ -130,6 +130,7 @@ double MainWindow::calcLambda(double x, double y, int type){
 
 
 void MainWindow::slot_load_triangle_image() {
+    _mandelKeyPressActive = false;
     QImage triangle_image(triangle_width, triangle_height, QImage::Format_RGB32);
     QPainter painter(&triangle_image);
     painter.fillRect(triangle_image.rect(), Qt::black);
@@ -211,6 +212,7 @@ void MainWindow::slot_load_triangle_image() {
 }
 
 void MainWindow::slot_load_checker_board_image() {
+  _mandelKeyPressActive = false;
 
   // The ~10 lines of code below must be changed with your code
   // Create a QImage of required size
@@ -242,37 +244,66 @@ const int spline_width = 1024;
 const int spline_height = 512;
 
 void MainWindow::slot_load_spline_image() {
+  _mandelKeyPressActive = false;
 
-    //accept_user_event_ = false;
-    SplineImage spline_image(spline_width, spline_height);
-
-
-  //
-  // You probably don't want to change these lines
-  //
+  SplineImage spline_image(spline_width, spline_height);
 
   image_widget_->setPixmap(QPixmap::fromImage(spline_image));
   image_widget_->setFixedSize(spline_width, spline_height);
   adjustSize();
 }
 
+const int mandelbrot_width = 600;
+const int mandelbrot_height = 400;
+double d = 1;
+double x_c = -0.5;
+double y_c = 0;
+
 void MainWindow::slot_load_mandelbrot_image() {
+  _mandelKeyPressActive = true;
 
-  // The ~10 lines of code below must be changed with your code
-  // Create a QImage of required size
-  // Draw a simple black/white checker board
-
-
-    //MandelbrotImage
-    //accept_user_event_ = false;
-  MandelbrotImage mandelbrot_image(600, 400, 1, -0.5, 0);
-
-
-  //
-  // You probably don't want to change these lines
-  //
+  MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c);
 
   image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
-  image_widget_->setFixedSize(600, 400);
+  image_widget_->setFixedSize(mandelbrot_width, mandelbrot_height);
   adjustSize();
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(_mandelKeyPressActive){
+
+        switch (event->key()) {
+            case Qt::Key_Left:
+                std::cout << "Left" << std::endl;
+                x_c+=0.1;
+                break;
+            case Qt::Key_Right:
+                std::cout << "Right" << std::endl;
+                x_c-=0.1;
+                break;
+            case Qt::Key_Down:
+                std::cout << "Down" << std::endl;
+                y_c-=0.1;
+                break;
+            case Qt::Key_Up:
+                std::cout << "Up" << std::endl;
+                y_c+=0.1;
+                break;
+            case Qt::Key_Plus:
+                std::cout << "Zoom in" << std::endl;
+                d +=0.1;
+                break;
+            case Qt::Key_Minus:
+                std::cout << "Zoom out" << std::endl;
+                d -=0.1;
+                break;
+            default:
+                std::cout << "This key does not do anything :(" << std::endl;
+        }
+
+        MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c);
+        image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
+    }
+
 }
