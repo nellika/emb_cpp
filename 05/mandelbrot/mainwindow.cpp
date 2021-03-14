@@ -262,7 +262,7 @@ double y_c = 0;
 void MainWindow::slot_load_mandelbrot_image() {
   _mandelKeyPressActive = true;
 
-  MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c);
+  MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c, false);
 
   image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
   image_widget_->setFixedSize(mandelbrot_width, mandelbrot_height);
@@ -271,6 +271,7 @@ void MainWindow::slot_load_mandelbrot_image() {
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    bool changed = true;
     if(_mandelKeyPressActive){
 
         switch (event->key()) {
@@ -298,12 +299,18 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
                 std::cout << "Zoom out" << std::endl;
                 d -=0.1;
                 break;
+            case Qt::Key_T:
+                std::cout << "Toggle Julia" << std::endl;
+                break;
             default:
+                changed = false;
                 std::cout << "This key does not do anything :(" << std::endl;
         }
 
-        MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c);
-        image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
+        if(changed){
+            MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c, false);
+            image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
+        }
     }
 
 }

@@ -48,6 +48,8 @@ void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
     int n;
     int depth = 100;
 
+    //z 0 = (x + iy), c0 = −0.4 + 0.6i
+
 //    for (int y = 0; y < height(); ++y) {
       for (auto y : current_rows) {
         double im_0 = v_pixel2rect(y);
@@ -55,8 +57,9 @@ void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
             double re_0 = h_pixel2rect(x);
 
             std::complex<double> c_0(re_0,im_0);
+            std::complex<double> z(0, 0);
 
-            n = calcMandelbrot(c_0, depth);
+            n = calcMandelbrot(c_0, z, depth);
 
             if(n == depth){
                 setPixel(x, y, qRgb(0, 0, 0));
@@ -70,9 +73,9 @@ void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
     }
 }
 
-int MandelbrotImage::calcMandelbrot(std::complex<double> c_0, int depth){
+int MandelbrotImage::calcMandelbrot(std::complex<double> c_0, std::complex<double> z_0, int depth){
     int i = 0;
-    std::complex<double> z(0);
+    std::complex<double> z = z_0;
 
     while (abs(z) < 2.0 && i < depth) {
         z = pow(z, 2) + c_0;
@@ -85,7 +88,8 @@ int MandelbrotImage::calcMandelbrot(std::complex<double> c_0, int depth){
     return i;
 }
 
-MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, double yc) : QImage(width, height, QImage::Format_RGB32)
+MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, double yc, bool julia)
+    : QImage(width, height, QImage::Format_RGB32)
 {
     std::vector<std::thread> threads;
     _px_maxh = height-1;
@@ -128,28 +132,3 @@ MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, dou
 //    std::cout << "Info: image calculated in " << ELEC4::Commify(elapsed_seconds.count()*1000000) << "us";
 
 }
-
-//void MandelbrotImage::keyPressEvent(QKeyEvent *event){
-//        switch (event->key()) {
-//            case Qt::Key_Left:
-//                std::cout << "Left" << std::endl;
-//                break;
-//            case Qt::Key_Right:
-//                std::cout << "Right" << std::endl;
-//                break;
-//            case Qt::Key_Down:
-//                std::cout << "Down" << std::endl;
-//                break;
-//            case Qt::Key_Up:
-//                std::cout << "Up" << std::endl;
-//                break;
-//            case Qt::Key_Plus:
-//                std::cout << "Zoom in" << std::endl;
-//                break;
-//            case Qt::Key_Minus:
-//                std::cout << "Zoom out" << std::endl;
-//                break;
-//            default:
-//                std::cout << "This key does not do anything :(" << std::endl;
-//        }
-//}

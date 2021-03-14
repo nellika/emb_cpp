@@ -32,7 +32,7 @@ private:
     const std::vector<double> _yg{7., 107., 255., 170., 10.};
     const std::vector<double> _yb{100., 183., 235., 40., 15.};
 
-    int calcMandelbrot(std::complex<double> c, int depth);
+    int calcMandelbrot(std::complex<double> c_0, std::complex<double> z_0, int depth);
 
 
     static const int num_threads = 8;
@@ -40,7 +40,7 @@ private:
     void createColorVectors();
 
 public:
-    MandelbrotImage(int spline_width, int spline_height, double d, double x_c, double y_c);
+    MandelbrotImage(int spline_width, int spline_height, double d, double x_c, double y_c, bool julia);
     ~MandelbrotImage() = default;
 //protected:
 //    void keyPressEvent(QKeyEvent *e);
