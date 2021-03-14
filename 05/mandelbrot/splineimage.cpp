@@ -41,6 +41,7 @@ SplineImage::SplineImage(int width, int height) : QImage(width, height, QImage::
     ELEC4::Clamp<int> clamp_to_height(0, _px_maxh);
     ELEC4::Clamp<double> clamp_to_rgb(0., 255.);
 
+
 //    printf("clampp %d, %d\n", clamp_to_height(1050), clamp_to_height(-10));
 
     for (int x = 0; x < width; ++x) {

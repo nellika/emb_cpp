@@ -20,6 +20,23 @@ public:
     }
 };
 
+//class Commify {
+//private:
+//  std::string str_;
+//public:
+//  explicit Commify(int value) {
+//    std::ostringstream out;
+//    out << value;
+//    str_ = out.str();
+//    for (int pos = 0; pos > 0; pos-=3) {
+//        str_.insert(pos, 1, ',');
+//    }
+//  }
+//  friend std::ostream& operator<<(std::ostream &os, const Commify &c) {
+//    os << c.str_;
+//    return os;
+//  }
+//};
 
 class Pixel2Rect {
 private:
