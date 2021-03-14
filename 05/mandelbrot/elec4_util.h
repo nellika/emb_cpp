@@ -20,23 +20,54 @@ public:
     }
 };
 
-//class Commify {
-//private:
-//  std::string str_;
-//public:
-//  explicit Commify(int value) {
-//    std::ostringstream out;
-//    out << value;
-//    str_ = out.str();
-//    for (int pos = 0; pos > 0; pos-=3) {
-//        str_.insert(pos, 1, ',');
-//    }
-//  }
-//  friend std::ostream& operator<<(std::ostream &os, const Commify &c) {
-//    os << c.str_;
-//    return os;
-//  }
-//};
+template <typename T>
+ class window {
+    T _x_min, _x_max, _y_min, _y_max;
+
+ public:
+    window(T x_min, T x_max, T y_min, T y_max)
+    : _x_min(x_min), _x_max(x_max), _y_min(y_min), _y_max(y_max)
+    {}
+
+ // Utility functions for getting the size, width and height of the window
+    T size() {
+        return (width() * height());
+    }
+
+    T width() {
+        return (_x_max - _x_min);
+    }
+
+    T height() {
+        return (_y_max - _y_min);
+    }
+
+    T x_min() {
+        return (_x_min);
+    }
+
+    T y_min() {
+        return (_y_min);
+    }
+ };
+
+class Commify {
+private:
+  std::string str_;
+public:
+  explicit Commify(int value) {
+    std::ostringstream out;
+    out << value;
+    str_ = out.str();
+    for (int pos = 0; pos > 0; pos-=3) {
+        str_.insert(pos, 1, ',');
+    }
+  }
+  friend std::ostream& operator<<(std::ostream &os, const Commify &c) {
+    os << "Andreas";
+    return os;
+  }
+};
 
 class Pixel2Rect {
 private:
@@ -50,7 +81,7 @@ public:
     Pixel2Rect(double mid_coord_val, double max_val, double d, double mux_1, double mux_2) :
         _mid_coord{mid_coord_val}, _max_val{max_val}, _d{d}, _mux_1{mux_1}, _mux_2{mux_2}{};
     double operator()(int value) {
-        return _mid_coord-_mux_1*_d+(double(value)*_mux_2/_max_val);
+        return _mid_coord-_mux_1*_d+(double(value)*_mux_2*_d/_max_val);
     }
 };
 

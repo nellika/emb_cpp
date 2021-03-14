@@ -258,11 +258,12 @@ const int mandelbrot_height = 400;
 double d = 1;
 double x_c = -0.5;
 double y_c = 0;
+bool julia = false;
 
 void MainWindow::slot_load_mandelbrot_image() {
   _mandelKeyPressActive = true;
 
-  MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c, false);
+  MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c, julia);
 
   image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
   image_widget_->setFixedSize(mandelbrot_width, mandelbrot_height);
@@ -277,30 +278,32 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         switch (event->key()) {
             case Qt::Key_Left:
                 std::cout << "Left" << std::endl;
-                x_c+=0.1;
+                x_c+=d/10;
                 break;
             case Qt::Key_Right:
                 std::cout << "Right" << std::endl;
-                x_c-=0.1;
+                x_c-=d/10;
                 break;
             case Qt::Key_Down:
                 std::cout << "Down" << std::endl;
-                y_c-=0.1;
+                y_c-=d/10;
                 break;
             case Qt::Key_Up:
                 std::cout << "Up" << std::endl;
-                y_c+=0.1;
+                y_c+=d/10;
                 break;
             case Qt::Key_Plus:
                 std::cout << "Zoom in" << std::endl;
-                d +=0.1;
+                d -=0.01;
                 break;
             case Qt::Key_Minus:
                 std::cout << "Zoom out" << std::endl;
-                d -=0.1;
+                d +=0.01;
                 break;
             case Qt::Key_T:
                 std::cout << "Toggle Julia" << std::endl;
+                julia = !julia;
+
                 break;
             default:
                 changed = false;
@@ -308,7 +311,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         }
 
         if(changed){
-            MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c, false);
+            MandelbrotImage mandelbrot_image(mandelbrot_width, mandelbrot_height, d, x_c, y_c, julia);
             image_widget_->setPixmap(QPixmap::fromImage(mandelbrot_image));
         }
     }

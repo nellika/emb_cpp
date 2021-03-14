@@ -17,12 +17,13 @@ private:
     double _xc;
     int _px_maxw;
     int _px_maxh;
+    bool _julia;
     int realToPixel(double px, bool type);
 
     std::complex<double> _zn_256;
     int _n_256;
-//    double v_pixel2rect(int px);
-//    double h_pixel2rect(int px);
+    double v_pixel2rect2(int px);
+    double h_pixel2rect2(int px);
 //    int calcMandelbrot(double Re, double Im, int depth);
     double _r_spline[2048];
     double _g_spline[2048];
