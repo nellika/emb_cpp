@@ -303,11 +303,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             case Qt::Key_T:
                 std::cout << "Toggle Julia" << std::endl;
                 julia = !julia;
-
                 break;
             default:
                 changed = false;
-                std::cout << "This key does not do anything :(" << std::endl;
         }
 
         if(changed){

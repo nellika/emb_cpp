@@ -19,11 +19,12 @@ private:
     int _px_maxh;
     bool _julia;
     int realToPixel(double px, bool type);
+    double pixelToReal(int px, bool type);
 
     std::complex<double> _zn_256;
     int _n_256;
-    double v_pixel2rect2(int px);
-    double h_pixel2rect2(int px);
+//    double v_pixel2rect2(int px);
+//    double h_pixel2rect2(int px);
 //    int calcMandelbrot(double Re, double Im, int depth);
     double _r_spline[2048];
     double _g_spline[2048];
@@ -35,7 +36,6 @@ private:
 
     int calcMandelbrot(std::complex<double> c_0, std::complex<double> z_0, int depth);
 
-
     static const int num_threads = 8;
     void process_sub_image(std::vector<int> current_rows);
     void createColorVectors();
@@ -43,8 +43,6 @@ private:
 public:
     MandelbrotImage(int spline_width, int spline_height, double d, double x_c, double y_c, bool julia);
     ~MandelbrotImage() = default;
-//protected:
-//    void keyPressEvent(QKeyEvent *e);
 };
 
 #endif // MANDELBROTIMAGE_H

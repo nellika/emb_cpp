@@ -1,13 +1,20 @@
 #include "mandelbrotimage.h"
 #include "qpainter.h"
 
-double MandelbrotImage::h_pixel2rect2(int x){
-//    return 5.5;
-    return _xc-1.5*_d+(double(x)*3*_d/double(_px_maxw));
+int MandelbrotImage::realToPixel(double real, bool type){
+    int pixel = 0;
+    if(type){ pixel = (real+0.05)*_px_maxw/1.1; }
+    else{ pixel = (265-real)*_px_maxh/275;}
+
+    return pixel;
 }
 
-double MandelbrotImage::v_pixel2rect2(int y){
-    return -_yc+_d+(double(y)*2*_d/double(_px_maxh));
+double MandelbrotImage::pixelToReal(int px, bool type){
+    double real = 0.0;
+    if(type){ real = px*1.1/_px_maxw-0.05; }
+    else{ real = 265-px*275/_px_maxh;}
+
+    return real;
 }
 
 //int MandelbrotImage::calcMandelbrot(double re_0, double im_0, int depth){
@@ -39,12 +46,23 @@ void MandelbrotImage::createColorVectors(){
         _b_spline[i] = clamp_to_rgb(interpolate_blue.get_value(x));
         x=x+(1.1/2048);
     }
+//    for (int x = 0; x < 2048; ++x) {
+//        double x_real = pixelToReal(x, true);
+
+//        double yr_real = interpolate_red.get_value(x_real);
+//        double yg_real = interpolate_green.get_value(x_real);
+//        double yb_real = interpolate_blue.get_value(x_real);
+
+//        _r_spline[x] = realToPixel(yr_real, false);
+//        _g_spline[x] = realToPixel(yg_real, false);
+//        _b_spline[x] = realToPixel(yb_real, false);
+//    }
 
 }
 
 void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
-    ELEC4::Pixel2Rect v_pixel2rect(_yc, _px_maxh, _d, 1, 2);
-    ELEC4::Pixel2Rect h_pixel2rect(_xc, _px_maxw, _d, 1.5, 3);
+    ELEC4::Pixel2Rect v_pixel2rect(_yc, _px_maxh, _d, 1, -2, 400);
+    ELEC4::Pixel2Rect h_pixel2rect(_xc, _px_maxw, _d, 1.5, 3, 0);
 
     int n;
     int depth = 100;
@@ -72,10 +90,10 @@ void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
             if(n == depth){
                 setPixel(x, y, qRgb(0, 0, 0));
             } else {
-                double v = log2(log2(pow(abs(_zn_256),2)));
-                int i=1024*sqrt(_n_256+5-v);
-                int mod = i%2048;
-                setPixel(x,y,qRgb(_r_spline[mod], _g_spline[mod], _b_spline[mod]));
+//                double v = log2(log2(pow(abs(_zn_256),2)));
+//                int i=1024*sqrt(_n_256+5-v);
+//                int mod = i%2048;
+                setPixel(x,y,qRgb(_r_spline[x], _g_spline[x], _b_spline[x]));
             }
         }
     }
@@ -144,9 +162,6 @@ MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, dou
 
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
-    printf("INFO: image calculed in %2fs\n", elapsed_seconds.count()*1000000);
-
-//    std::cout << "Info: image calculated in " << out.str() << "us";
-    std::cout << "Info: image calculated in " << ELEC4::Commify(elapsed_seconds.count()*1000000) << "us";
+    std::cout << "Info: image calculated in " << ELEC4::Commify(elapsed_seconds.count()*1000000) << " us" << std::endl;
 
 }
