@@ -39,25 +39,19 @@ void MandelbrotImage::createColorVectors(){
     ELEC4::Spline interpolate_green(_xs, _yg);
     ELEC4::Spline interpolate_blue(_xs, _yb);
 
+    int vector_size = 2048;
+
     double x = -0.05;
-    for (int i=0; i<2048; i++){
+    double step_size = 1.1/vector_size;
+    for (int i=0; i<vector_size; i++){
+//        double temp = x;
+//        if(x < 0) temp = 0;
+//        if(x > 1) temp = 1;
         _r_spline[i] = clamp_to_rgb(interpolate_red.get_value(x));
         _g_spline[i] = clamp_to_rgb(interpolate_green.get_value(x));
         _b_spline[i] = clamp_to_rgb(interpolate_blue.get_value(x));
-        x=x+(1.1/2048);
+        x += step_size;
     }
-//    for (int x = 0; x < 2048; ++x) {
-//        double x_real = pixelToReal(x, true);
-
-//        double yr_real = interpolate_red.get_value(x_real);
-//        double yg_real = interpolate_green.get_value(x_real);
-//        double yb_real = interpolate_blue.get_value(x_real);
-
-//        _r_spline[x] = realToPixel(yr_real, false);
-//        _g_spline[x] = realToPixel(yg_real, false);
-//        _b_spline[x] = realToPixel(yb_real, false);
-//    }
-
 }
 
 void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
@@ -90,10 +84,16 @@ void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
             if(n == depth){
                 setPixel(x, y, qRgb(0, 0, 0));
             } else {
-//                double v = log2(log2(pow(abs(_zn_256),2)));
-//                int i=1024*sqrt(_n_256+5-v);
-//                int mod = i%2048;
-                setPixel(x,y,qRgb(_r_spline[x], _g_spline[x], _b_spline[x]));
+                double v = log2(log2(pow(abs(_zn),2)));
+                int i = (int)(sqrt(n + 5 - v) * 1024);
+//                if(x == 13 && y ==24){
+//                    printf("goodieee: %d, %f, %f\n", i, abs(_zn), v);
+//                }
+//                if(i < 0){
+//                    printf("meh: %d, %f, %f, %d, %d\n", i, abs(_zn), v,x,y);
+//                }
+                int color_idx = i%2048;
+                setPixel(x,y,qRgb(_r_spline[color_idx], _g_spline[color_idx], _b_spline[color_idx]));
             }
         }
     }
@@ -102,24 +102,12 @@ void MandelbrotImage::process_sub_image(std::vector<int> current_rows){
 int MandelbrotImage::calcMandelbrot(std::complex<double> c_0, std::complex<double> z_0, int depth){
     int i = 0;
     std::complex<double> z = z_0;
-    std::complex<double> z_col = z_0;
 
-    while (abs(z) < 2.0 && i < depth) {
-        z = pow(z, 2) + c_0;
+    while (abs(z) <= 2.0 && i < depth) {
+        z = z*z + c_0;
         ++i;
     }
-
-//    bool notVisisted = true;
-
-//    for (int n = 0; n < depth; ++n) {
-//        z_col = pow(z_col, 2) + c_0;
-//        if(abs(z_col) >= 256 && notVisisted){
-//            notVisisted = false;
-//            _n_256 = n;
-//            _zn_256 = z_col;
-//        }
-//    }
-
+    _zn = z;
     return i;
 }
 
@@ -162,6 +150,6 @@ MandelbrotImage::MandelbrotImage(int width, int height, double d, double xc, dou
 
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "Info: image calculated in " << ELEC4::Commify(elapsed_seconds.count()*1000000) << " us" << std::endl;
+//    std::cout << "Info: image calculated in " << ELEC4::Commify(elapsed_seconds.count()*1000000) << " us" << std::endl;
 
 }
