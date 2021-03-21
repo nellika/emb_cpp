@@ -40,3 +40,14 @@
 - [x] Draw pretty spline lines and color background based on f(x)
 
 ![Colorful splines](/04/derived_spline.png?raw=true "Lab 04 - Derived spline")
+
+## 05 QT - Mandelbrot set
+> Draw Mandelbrot set, learn about the usage of complex numbers and multi-threaded programming
+
+- [x] Create a 2-color Mandelbrot set
+- [x] Use the Spline class from lab 2 to color the background
+- [x] Improving execution time with multi-threaded computing
+- [x] Add user interactions to zoom and pane (yes, it is ugly to create a new class every time...)
+- [x] Extend calculation to toggle Julia set
+
+![Colorful Mandelbrot](/05/mandelbrot.png?raw=true "Lab 05 - Mandelbrot set")
