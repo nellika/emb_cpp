@@ -28,8 +28,10 @@ public:
     std::ostringstream out;
     out << value;
     _str = out.str();
-    for (ulong pos = _str.length()-3; pos > 0; pos-=3) {
-        _str.insert(pos, 1, ',');
+    if(_str.length() > 3){
+        for (int pos = _str.length()-3; pos > 0; pos-=3) {
+            _str.insert(pos, 1, ',');
+        }
     }
   }
   friend std::ostream& operator<<(std::ostream &os, const Commify &c) {
@@ -43,15 +45,14 @@ private:
     double _mid_coord;
     double _max_val;
     double _d;
-    double _mux_1;
-    double _mux_2;
-    int _min_coord;
+    double _mux;
 
 public:
-    Pixel2Rect(double mid_coord_val, double max_val, double d, double mux_1, double mux_2, int min_coord) :
-        _mid_coord{mid_coord_val}, _max_val{max_val}, _d{d}, _mux_1{mux_1}, _mux_2{mux_2}, _min_coord{min_coord} {};
+    Pixel2Rect(double mid_coord_val, double max_val, double d, double mux) :
+        _mid_coord{mid_coord_val}, _max_val{max_val}, _d{d}, _mux{mux} {};
+
     double operator()(int value) {
-        return _mid_coord-_mux_1*_d+((double(value)-_min_coord)*_mux_2*_d/_max_val);
+        return _mux*(value - _max_val / 2.0) / (0.5  * _max_val / _d) + _mid_coord;
     }
 };
 

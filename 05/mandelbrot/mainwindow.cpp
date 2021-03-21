@@ -286,11 +286,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
                 break;
             case Qt::Key_Down:
                 std::cout << "Down" << std::endl;
-                y_c-=d/10;
+                y_c+=d/10;
                 break;
             case Qt::Key_Up:
                 std::cout << "Up" << std::endl;
-                y_c+=d/10;
+                y_c-=d/10;
                 break;
             case Qt::Key_Plus:
                 std::cout << "Zoom in" << std::endl;
@@ -302,7 +302,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
                 break;
             case Qt::Key_T:
                 std::cout << "Toggle Julia" << std::endl;
-                julia = !julia;
+//              //julia = !julia;
+
+                if(!julia){ d = 1; x_c = 0; y_c = 0; julia = true; }
+                      else{ d = 1; x_c = -0.5; y_c = 0; julia = false; }
+
                 break;
             default:
                 changed = false;
